@@ -10,8 +10,16 @@ class IovationFlutter {
     final String? version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
-  static Future<String?> get initializeIovation async {
-    final String? version = await _channel.invokeMethod('initializeIovation');
-    return version;
+  static Future<bool?>  initializeIovation(
+      {required  String subscriberKey}) async {
+    //TODO ('Implement initializeIovation')
+final bool? isInitialized =  await _channel.invokeMethod('initializeIovation', {'subscriberKey':subscriberKey});
+    return true;
+  }
+
+  static Future<String?> getBlackBoxString() async{
+    //TODO ('Implement getBlackBoxString')
+    final String? blackBoxValue =  await _channel.invokeMethod('getBlackBoxString');
+    return blackBoxValue;
   }
 }

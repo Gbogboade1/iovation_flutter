@@ -46,6 +46,13 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  bool loading = false;
+  updateLoading(bool status){
+    setState(() {
+      loading  = status;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,8 +60,36 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Text('Running on: $_platformVersion\n'),
+            ),
+            MaterialButton(
+              onPressed: () async{
+               updateLoading(true);
+                final result = await IovationFlutter.initializeIovation(subscriberKey: '87654321');
+               updateLoading(false);
+                print(result);
+
+              },
+              child:const Text('Init Iovation'),
+              color: Colors.red,
+            ),
+            MaterialButton(
+              onPressed: () async{
+                updateLoading(true);
+                final result = await IovationFlutter.getBlackBoxString();
+                updateLoading(false);
+                print(result);
+
+              },
+              child:const Text('Get String'),
+              color: Colors.green,
+            ),
+            if(loading)Center(child: CircularProgressIndicator(),),
+          ],
         ),
       ),
     );
